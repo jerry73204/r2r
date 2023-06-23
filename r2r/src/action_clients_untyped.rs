@@ -217,10 +217,24 @@ impl WrappedActionClientUntyped {
                 .map_err(|_| Error::RCL_RET_CLIENT_INVALID)
                 .map(|r| match r {
                     Ok(r) => match r.return_code {
-                        e if e == action_msgs::srv::CancelGoal::Response::ERROR_NONE as i8 => Ok(()),
-                        e if e == action_msgs::srv::CancelGoal::Response::ERROR_REJECTED as i8 => Err(Error::GoalCancelRejected),
-                        e if e == action_msgs::srv::CancelGoal::Response::ERROR_UNKNOWN_GOAL_ID as i8 => Err(Error::GoalCancelUnknownGoalID),
-                        e if e == action_msgs::srv::CancelGoal::Response::ERROR_GOAL_TERMINATED as i8 => Err(Error::GoalCancelAlreadyTerminated),
+                        e if e == action_msgs::srv::CancelGoal::Response::ERROR_NONE as i8 => {
+                            Ok(())
+                        }
+                        e if e == action_msgs::srv::CancelGoal::Response::ERROR_REJECTED as i8 => {
+                            Err(Error::GoalCancelRejected)
+                        }
+                        e if e
+                            == action_msgs::srv::CancelGoal::Response::ERROR_UNKNOWN_GOAL_ID
+                                as i8 =>
+                        {
+                            Err(Error::GoalCancelUnknownGoalID)
+                        }
+                        e if e
+                            == action_msgs::srv::CancelGoal::Response::ERROR_GOAL_TERMINATED
+                                as i8 =>
+                        {
+                            Err(Error::GoalCancelAlreadyTerminated)
+                        }
                         x => panic!("unknown error code return from action server: {}", x),
                     },
                     Err(e) => Err(e),
@@ -274,7 +288,8 @@ impl ActionClient_ for WrappedActionClientUntyped {
                     .join(",");
                 log::error!(
                     "no such req id: {}, we have [{}], ignoring",
-                    request_id.sequence_number, we_have
+                    request_id.sequence_number,
+                    we_have
                 );
             }
         }
@@ -312,7 +327,8 @@ impl ActionClient_ for WrappedActionClientUntyped {
                     .join(",");
                 log::error!(
                     "no such req id: {}, we have [{}], ignoring",
-                    request_id.sequence_number, we_have
+                    request_id.sequence_number,
+                    we_have
                 );
             }
         }
@@ -398,7 +414,8 @@ impl ActionClient_ for WrappedActionClientUntyped {
                     .join(",");
                 log::error!(
                     "no such req id: {}, we have [{}], ignoring",
-                    request_id.sequence_number, we_have
+                    request_id.sequence_number,
+                    we_have
                 );
             }
         }

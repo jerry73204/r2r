@@ -193,7 +193,8 @@ where
                     .join(",");
                 log::error!(
                     "no such req id: {}, we have [{}], ignoring",
-                    request_id.sequence_number, we_have
+                    request_id.sequence_number,
+                    we_have
                 );
             }
         } // TODO handle failure.
@@ -279,7 +280,8 @@ impl Client_ for UntypedClient_ {
                     .join(",");
                 log::error!(
                     "no such req id: {}, we have [{}], ignoring",
-                    request_id.sequence_number, we_have
+                    request_id.sequence_number,
+                    we_have
                 );
             }
         } // TODO handle failure.
